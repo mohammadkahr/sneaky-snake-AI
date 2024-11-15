@@ -126,17 +126,10 @@ class GameGUI:
 
     def draw_path(self):
         if self.controller.algo != None and self.view_path:
-            for path in self.controller.algo.path:  # for each {x,y} in path
+            for path in self.controller.algo.path:
                 x = int(path.x * CELL_SIZE)
                 y = int(path.y * CELL_SIZE)
-
-                path_rect = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
-
-                shape_surf = pygame.Surface(path_rect.size, pygame.SRCALPHA)
-                pygame.draw.rect(shape_surf, PATHCOLOR, shape_surf.get_rect())
-
-                pygame.draw.rect(self.display, BANNER_COLOR, path_rect, 1)
-                self.display.blit(shape_surf, path_rect)
+                pygame.draw.circle(self.display, PATHCOLOR, (x + CELL_SIZE // 2, y + CELL_SIZE // 2), CELL_SIZE // 4)
 
     def draw_snake_head(self, snake):
         head = snake.body[0]
@@ -164,8 +157,10 @@ class GameGUI:
     def draw_fruit(self, fruit):
         x = int(fruit.x * CELL_SIZE)
         y = int(fruit.y * CELL_SIZE)
-
         fruit_rect = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
+
+        radius = CELL_SIZE // 2 + (pygame.time.get_ticks() // 200) % 5
+        pygame.draw.circle(self.display, FRUIT_COLOR, (x + CELL_SIZE // 2, y + CELL_SIZE // 2), radius)
         pygame.draw.rect(self.display, FRUIT_COLOR, fruit_rect)
 
     def draw_banner(self):

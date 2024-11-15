@@ -36,7 +36,8 @@ class A_STAR(Algorithm):
             # for each neighbor
             for neighbor in neighbors:
                 # check if path inside snake, outside boundary or already visited
-                if self.inside_body(snake, neighbor) or self.outside_boundary(neighbor) or neighbor in self.explored_set:
+                if self.inside_body(snake, neighbor) or self.outside_boundary(
+                        neighbor) or neighbor in self.explored_set:
                     continue  # skip this path
 
                 g = lowest_node.g + 1

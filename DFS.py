@@ -1,4 +1,3 @@
-from Utility import Node
 from Algorithm import Algorithm
 
 
@@ -11,7 +10,7 @@ class DFS(Algorithm):
         if currentstate.equal(goalstate):
             return self.get_path(currentstate)
 
-        # if already visted return
+        # if already visited return
         if currentstate in self.explored_set:
             return None
 
@@ -20,11 +19,12 @@ class DFS(Algorithm):
 
         # for each neighbor
         for neighbor in neighbors:
-            if not self.inside_body(snake, neighbor) and not self.outside_boundary(neighbor) and neighbor not in self.explored_set:
+            if not self.inside_body(snake, neighbor) and not self.outside_boundary(
+                    neighbor) and neighbor not in self.explored_set:
                 neighbor.parent = currentstate  # mark parent node
                 path = self.recursive_DFS(
                     snake, goalstate, neighbor)  # check neighbor
-                if path != None:
+                if path is not None:
                     return path  # found path
         return None
 
@@ -35,7 +35,7 @@ class DFS(Algorithm):
             path = self.path.pop()
 
             if self.inside_body(snake, path):
-                self.path = [] # or calculate new path!
+                self.path = []  # or calculate new path!
             else:
                 return path
 

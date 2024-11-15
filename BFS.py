@@ -1,5 +1,4 @@
 from collections import deque
-from Utility import Node
 from Algorithm import Algorithm
 
 
@@ -28,19 +27,15 @@ class BFS(Algorithm):
 
             # for each neighbor
             for neighbor in neighbors:
-                # check if path inside snake, outside boundary or already visited
+                if neighbor in self.explored_set or neighbor in self.frontier:
+                    continue  # skip already explored or queued nodes
+
                 if self.inside_body(snake, neighbor) or self.outside_boundary(neighbor):
-                    self.explored_set.append(neighbor)
-                    continue  # skip this path
+                    continue  # skip invalid paths
 
-                if neighbor not in self.frontier and neighbor not in self.explored_set:
-                    neighbor.parent = shallowest_node  # mark parent
-                    self.explored_set.append(neighbor)  # mark visited
-                    # add to frontier to explore its kids next cycle
-                    self.frontier.append(neighbor)
+                neighbor.parent = shallowest_node  # mark parent
+                self.frontier.append(neighbor)  # add to frontier
 
-                    # check if goal state
-                    if neighbor.equal(goalstate):
-                        # return path
-                        return self.get_path(neighbor)
+                if neighbor.equal(goalstate):
+                    return self.get_path(neighbor)
         return None
